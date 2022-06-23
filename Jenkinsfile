@@ -3,7 +3,6 @@ pipeline {
     agent any
 
     stages {
-
         stage('Test') {
             steps {
                 sh "./mvnw test"
@@ -16,6 +15,17 @@ pipeline {
             }
         }
 
+        stage('Find shared files') {
+            steps {
+                sh "ls -lah target"
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: "target/*.jar"
+        }
     }
 
 }
