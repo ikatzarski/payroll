@@ -4,21 +4,15 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
+        stage('Test') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/*']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[ url: 'https://github.com/ikatzarski/payroll.git' ]]])
+                sh "./mvnw test"
             }
         }
 
         stage('Build') {
             steps {
                 sh "./mvnw package"
-            }
-        }
-
-        stage('Test') {
-            steps {
-                sh "./mvnw test"
             }
         }
 
